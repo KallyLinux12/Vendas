@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Anúncios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #0056b3;
+            padding: 0.5rem;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar {
+            display: flex;
+            margin-bottom: 2rem;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+        .search-bar button {
+            padding: 0.5rem;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            display: flex;
+        }
+        .card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 1rem;
+        }
+        .card-content h3 {
+            margin: 0;
+        }
+        .card-content p {
+            color: #555;
+        }
+        .form-section {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-section h2 {
+            margin-bottom: 1rem;
+        }
+        .form-section form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-section form input, .form-section form textarea, .form-section form button {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-section form button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Plataforma de Anúncios</h1>
+        <p>Compre e venda com facilidade!</p>
+    </header>
+    <nav>
+        <a href="#">Início</a>
+        <a href="#">Anunciar</a>
+        <a href="#">Meus Anúncios</a>
+        <a href="#">Login</a>
+    </nav>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="O que você está procurando?">
+            <button>Buscar</button>
+        </div>
+        
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="Produto">
+            <div class="card-content">
+                <h3>Produto Exemplo</h3>
+                <p>Descrição breve do produto.</p>
+                <p><strong>R$ 100,00</strong></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/150" alt="Produto">
+            <div class="card-content">
+                <h3>Outro Produto</h3>
+                <p>Descrição breve do produto.</p>
+                <p><strong>R$ 200,00</strong></p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Publique Seu Anúncio</h2>
+            <form id="adForm">
+                <input type="text" id="productName" placeholder="Nome do Produto" required>
+                <textarea id="productDescription" placeholder="Descrição do Produto" rows="4" required></textarea>
+                <input type="number" id="productPrice" placeholder="Preço" required>
+                <input type="file" id="productImage" accept="image/*" required>
+                <button type="submit">Publicar Anúncio</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.querySelector('.search-bar input');
+        const cards = document.querySelectorAll('.card');
+        const adForm = document.getElementById('adForm');
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = title.includes(query) ? '' : 'none';
+            });
+        });
+
+        adForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const productName = document.getElementById('productName').value;
+            const productDescription = document.getElementById('productDescription').value;
+            const productPrice = document.getElementById('productPrice').value;
+
+            const newCard = document.createElement('div');
+            newCard.classList.add('card');
+
+            newCard.innerHTML = `
+                <img src="https://via.placeholder.com/150" alt="Produto">
+                <div class="card-content">
+                    <h3>${productName}</h3>
+                    <p>${productDescription}</p>
+                    <p><strong>R$ ${productPrice}</strong></p>
+                </div>
+            `;
+
+            document.querySelector('.container').appendChild(newCard);
+
+            adForm.reset();
+            alert('Anúncio publicado com sucesso!');
+        });
+    </script>
+</body>
+</html>
